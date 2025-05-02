@@ -26,10 +26,10 @@ if($result->num_rows==0){
 }
 else if($result->num_rows==1){
     $row = $result->fetch_assoc();
-    $_SESSION["nome"] = $row["username"];
+    $_SESSION["username"] = $row["username"];
     $_SESSION["id_utente"] = $row["id_utente"];
     //$_SESSION["ruolo"]=$row["admin"];
-    header("Location: Home.php?msg=Benvenuto ".$_SESSION["nome"]);
+    header("Location: ../ConsiglioAI.php?msg=Benvenuto ".$_SESSION["username"]);
     exit;
 }
 ?>

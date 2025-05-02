@@ -1,3 +1,12 @@
+<?php
+
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+
+    if (isset($_GET["msg"]))
+        echo "<h2>" . $_GET["msg"] . "</h2>";
+?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -41,7 +50,7 @@
         <br>
 
         <label>Punteggio minimo:</label>
-        <input type="number" id="minScore" min="0" max="100" value="70" />
+        <input type="number" id="minScore" min="0" max="100" value="0" />
 
         <button type="submit">Cerca Manga</button>
     </form>
