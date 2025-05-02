@@ -1,6 +1,6 @@
 <?php
 
-    $conn= new mysqli("localhost","root","","lememe");
+    $conn= new mysqli("localhost","root","","MangaMatch");
     
     if($conn->connect_errno){
     

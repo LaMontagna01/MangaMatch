@@ -1,5 +1,5 @@
 <?php
-require_once("Conn.php");
+require_once("login/Conn.php");
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -19,7 +19,9 @@ if (isset($_GET["msg"]))
 </head>
 <body>
     <h1>Registrati</h1>
-    <form action="gestoreRegistrati.php" method="get">
+    <form action="login/gestoreRegistrati.php" method="get">
+        <label for="username">username: </label><input type="text" name="username" id="username">
+
         <label for="nome">nome: </label><input type="text" name="nome" id="nome">
         <label for="cognome">cognome: </label><input type="text" name="cognome" id="cognome">
 

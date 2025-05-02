@@ -7,6 +7,7 @@ if (!isset($_SESSION)) {
 
 $password = $_GET["password"];
 $password2 = $_GET["password2"];
+$username = $_GET["username"];
 $nome = $_GET["nome"];
 $cognome = $_GET["cognome"];
 
@@ -16,7 +17,7 @@ if ($password != $password2) {
     exit;
 }
 
-if (!isset($password) || empty($password) || !isset($password2) || empty($password2) ||
+if (!isset($username) || empty($username) || !isset($password) || empty($password) || !isset($password2) || empty($password2) ||
     !isset($nome) || empty($nome) || !isset($cognome) || empty($cognome))
 {
     header("Location: registrati.php?msg=compilare tutti i campi");
@@ -25,9 +26,9 @@ if (!isset($password) || empty($password) || !isset($password2) || empty($passwo
 
 $pwdCifrata = md5($password);
 
-$q = "INSERT INTO utente (nome, cognome, password) VALUES (?, ?, ?)";
+$q = "INSERT INTO utente (username, nome, cognome, password) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($q);
-$stmt->bind_param("ss",$username, $cognome, $pwdCifrata);
+$stmt->bind_param("ssss",$username, $nome, $cognome, $pwdCifrata);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -36,7 +37,7 @@ if($conn->error){
     exit;
 }
 
-header("Location: login/index.php?msg=registrazione effettuata");
+header("Location: ../index.php?msg=registrazione effettuata");
 exit;
 
 ?>

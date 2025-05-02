@@ -1,5 +1,5 @@
 <?php
-require_once("Conn.php");
+require_once("login/Conn.php");
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -19,11 +19,11 @@ if (isset($_GET["msg"]))
 <body>
     <div id="container">
     <h1>login</h1>
-    <form action="gestoreLogin.php" method="get">
+    <form action="login/gestoreLogin.php" method="get">
         <label for="username">username </label><input type="text" name="username" id="username">
         <label for="password">password </label><input type="password" name="password" id="password">
 
-    <input type="submit" value="login">
+        <input type="submit" value="login">
     </form> <br><br>
 
     <label>Non hai un account? </label><a href="registrati.php"> Registrati!</a><br><br>
