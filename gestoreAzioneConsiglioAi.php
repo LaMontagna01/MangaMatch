@@ -1,5 +1,6 @@
 <?php
 require_once("login/Conn.php");
+require_once("aggiungiManga.php");
 
 if (!isset($_SESSION)) {
     session_start();
@@ -8,29 +9,6 @@ if (!isset($_SESSION)) {
 if (!isset($_SESSION["username"])) {
     header("Location: index.php?msg=Effettua la login!");
     exit;
-}
-
-function IsMangaEsiste($conn, $id, $nome, $autore, $descrizione, $volumi, $capitoli, $rating, $immagine) {
-    $check = $conn->prepare("SELECT id FROM manga WHERE id = ?");
-    if (!$check) {
-        die("Errore SELECT: " . $conn->error);
-    }
-    $check->bind_param("i", $id);
-    $check->execute();
-    $check->store_result();
-
-    if ($check->num_rows == 0) {
-        $insert = $conn->prepare("INSERT INTO manga (id, nome, autore, descrizione, volumi, capitoli, rating, immagine) 
-                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        if (!$insert) {
-            die("Errore INSERT: " . $conn->error);
-        }
-        $insert->bind_param("isssiiis", $id, $nome, $autore, $descrizione, $volumi, $capitoli, $rating, $immagine);
-        $insert->execute();
-        $insert->close();
-    }
-
-    $check->close();
 }
 
 // Recupera valori dal POST
@@ -70,30 +48,9 @@ if ($id_manga && $id_utente) {
             header("Location: ConsiglioAI.php?msg=Errore nella query: " . $conn->error);
             exit;
         }
-
-    // 3. Oppure aggiungi alla collezione
-    } elseif (isset($_POST["Collezione"])) {
-        $q = "INSERT INTO collezione (id_utente, id_manga) VALUES (?, ?)";
-        $stmt = $conn->prepare($q);
-
-        if ($stmt) {
-            $stmt->bind_param("ii", $id_utente, $id_manga);
-            $success = $stmt->execute();
-
-            if ($success) {
-                header("Location: ConsiglioAI.php?msg=Collezione aggiornata!");
-                exit;
-            } else {
-                header("Location: ConsiglioAI.php?msg=Errore: " . $stmt->error);
-                exit;
-            }
-        } else {
-            header("Location: ConsiglioAI.php?msg=Errore nella query: " . $conn->error);
-            exit;
-        }
     }
 }
 
-//header("Location: ConsiglioAI.php?msg=Operazione non valida.");
-//exit;
+header("Location: ConsiglioAI.php?msg=Operazione non valida.");
+exit;
 ?>

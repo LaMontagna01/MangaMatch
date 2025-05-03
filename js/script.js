@@ -56,8 +56,19 @@ document.getElementById("mangaForm").addEventListener("submit", async (event) =>
                 <p><strong>Generi:</strong> ${genresList}</p> 
 
                 <button name="preferiti">Aggiungi ai preferiti</button>
+            </form>
+
+            <form action="Librerie.php" method="post">
+                <input type="hidden" name="id_manga" value="${manga.id}">
+                <input type="hidden" name="titolo_manga" value="${manga.title.romaji}">
+                <input type="hidden" name="autore_manga" value="${manga.staff?.edges?.[0]?.node?.name?.full || 'Sconosciuto'}">
+                <input type="hidden" name="descrizione_manga" value="${description.replace(/(<([^>]+)>)/gi, "").replace(/"/g, "'")}">
+                <input type="hidden" name="volumi_manga" value="${manga.volumes || 1000}">
+                <input type="hidden" name="capitoli_manga" value="${manga.chapters || 10000}">
+                <input type="hidden" name="rating_manga" value="${manga.averageScore || 0}">
+                <input type="hidden" name="immagine_manga" value="${manga.coverImage.large}">
+
                 <button name="Collezione">Aggiungi ad una collezione</button>
-                <a href="${manga.siteUrl}" target="_blank">Vai su AniList</a>
             </form>
         `;
 
