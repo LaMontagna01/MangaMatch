@@ -4,37 +4,44 @@ import { fetchFromAniList } from "./GetApiAniList.js"; // Importa la funzione pe
 // Funzione per ottenere i manga basati sulle preferenze
 export async function getMangaByPreferences(genres = [], formats = [], statuses = [], minScore = 0, maxChapters = 10000) {
     const mangaQuery = `
-        query ($genres: [String], $formats: [MediaFormat], $statuses: [MediaStatus], $minScore: Int, $maxChapters: Int) {
-            Page(page: 1, perPage: 10) {
-                media(
-                    type: MANGA
-                    genre_in: $genres
-                    format_in: $formats
-                    status_in: $statuses
-                    averageScore_greater: $minScore
-                    chapters_lesser: $maxChapters
-                    sort: SCORE_DESC
-                    isAdult: false
-                ) {
-                    id
-                    title {
-                        romaji
-                        english
-                        native
+    query ($genres: [String], $formats: [MediaFormat], $statuses: [MediaStatus], $minScore: Int, $maxChapters: Int) {
+        Page(page: 1, perPage: 10) {
+            media(
+                type: MANGA
+                genre_in: $genres
+                format_in: $formats
+                status_in: $statuses
+                averageScore_greater: $minScore
+                chapters_lesser: $maxChapters
+                sort: SCORE_DESC
+                isAdult: false
+            ) {
+                id
+                title {
+                    romaji
+                    english
+                    native
+                }
+                description
+                averageScore
+                chapters
+                genres
+                volumes
+                coverImage {
+                    large
+                }
+                siteUrl
+                staff(perPage: 1, sort: [RELEVANCE, ROLE]) {
+                    nodes {
+                        name {
+                            full
+                        }
                     }
-                    description
-                    averageScore
-                    chapters
-                    genres
-                    volumes
-                    coverImage {
-                        large
-                    }
-                    siteUrl
                 }
             }
         }
-    `;
+    }
+`;
 
     const variables = {
         genres,

@@ -1,13 +1,13 @@
 <?php
-require_once("login/Conn.php");
-require_once("aggiungiManga.php");
+require_once("../login/Conn.php");
+require_once("../creazioneLibrerie/aggiungiManga.php");
 
 if (!isset($_SESSION)) {
     session_start();
 }
 
 if (!isset($_SESSION["username"])) {
-    header("Location: index.php?msg=Effettua la login!");
+    header("Location: ../pagineVisualizzate/index.php?msg=Effettua la login!");
     exit;
 }
 
@@ -25,6 +25,8 @@ $immagine = $_POST["immagine_manga"];
 
 if ($id_manga && $id_utente) {
 
+
+
     // 1. Assicurati che il manga esista nella tabella
     IsMangaEsiste($conn, $id_manga, $titolo_manga, $autore_manga, $descrizione, $volumi, $capitoli, $rating, $immagine);
 
@@ -38,19 +40,19 @@ if ($id_manga && $id_utente) {
             $success = $stmt->execute();
     
             if ($success) {
-                header("Location: ConsiglioAI.php?msg=Preferito aggiunto!");
+                header("Location: ../pagineVisualizzate/ConsiglioAI.php?msg=Preferito aggiunto!");
                 exit;
             } else {
-                header("Location: ConsiglioAI.php?msg=Errore: " . $stmt->error);
+                header("Location: ../pagineVisualizzate/ConsiglioAI.php?msg=Errore: " . $stmt->error);
                 exit;
             }
         } else {
-            header("Location: ConsiglioAI.php?msg=Errore nella query: " . $conn->error);
+            header("Location: ../pagineVisualizzate/ConsiglioAI.php?msg=Errore nella query: " . $conn->error);
             exit;
         }
     }
 }
 
-header("Location: ConsiglioAI.php?msg=Operazione non valida.");
+header("Location: ../pagineVisualizzate/ConsiglioAI.php?msg=Operazione non valida.");
 exit;
 ?>

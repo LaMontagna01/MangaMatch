@@ -10,7 +10,7 @@ $password = $_GET["password"];
 $passMD5 = md5($password);
 
 if(!isset($username) || empty($username)|| !isset($password) || empty($password)){
-    header("Location: ../index.php?msg=compilare tutti i campi");
+    header("Location: ../pagineVisualizzate/index.php?msg=compilare tutti i campi");
     exit;
 }
 
@@ -21,7 +21,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if($result->num_rows==0){
-    header("Location: ../index.php?msg=username o password errati");
+    header("Location: ../pagineVisualizzate/index.php?msg=username o password errati");
     exit;
 }
 else if($result->num_rows==1){
@@ -29,7 +29,7 @@ else if($result->num_rows==1){
     $_SESSION["username"] = $row["username"];
     $_SESSION["id_utente"] = $row["id_utente"];
     //$_SESSION["ruolo"]=$row["admin"];
-    header("Location: ../ConsiglioAI.php?msg=Benvenuto ".$_SESSION["username"]);
+    header("Location: ../pagineVisualizzate/ConsiglioAI.php?msg=Benvenuto ".$_SESSION["username"]);
     exit;
 }
 ?>

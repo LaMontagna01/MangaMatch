@@ -19,7 +19,7 @@ if (isset($_GET["msg"]))
     <body>
         <div id="container">
             <h1>login</h1>
-            <form action="login/gestoreLogin.php" method="get">
+            <form action="../login/gestoreLogin.php" method="get">
                 <label for="username">username </label><input type="text" name="username" id="username">
                 <label for="password">password </label><input type="password" name="password" id="password">
 

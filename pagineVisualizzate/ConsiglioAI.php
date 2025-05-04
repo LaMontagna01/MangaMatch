@@ -6,6 +6,7 @@
 
     if (isset($_GET["msg"]))
         echo "<h2>" . $_GET["msg"] . "</h2>";
+
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -15,7 +16,7 @@
     <title>Ricerca Manga</title>
 
     <!-- Inclusione script.js -->
-    <script type="module" src="js/script.js"></script>
+    <script type="module" src="../js/script.js"></script>
 </head>
 <body>
     <h1>Trova un Manga</h1>

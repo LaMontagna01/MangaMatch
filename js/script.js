@@ -38,10 +38,10 @@ document.getElementById("mangaForm").addEventListener("submit", async (event) =>
         const description = await getMangaDescriptionViaJS(manga);
 
         resultDiv.innerHTML = `
-            <form action="gestoreAzioneConsiglioAi.php" method="post">
+            <form action="../ConsiglioAI/gestoreAzioneConsiglioAi.php" method="post">
                 <input type="hidden" name="id_manga" value="${manga.id}">
                 <input type="hidden" name="titolo_manga" value="${manga.title.romaji}">
-                <input type="hidden" name="autore_manga" value="${manga.staff?.edges?.[0]?.node?.name?.full || 'Sconosciuto'}">
+                <input type="hidden" name="autore_manga" value="${manga.staff?.nodes?.[0]?.name?.full || ''}">
                 <input type="hidden" name="descrizione_manga" value="${description.replace(/(<([^>]+)>)/gi, "").replace(/"/g, "'")}">
                 <input type="hidden" name="volumi_manga" value="${manga.volumes || 1000}">
                 <input type="hidden" name="capitoli_manga" value="${manga.chapters || 10000}">
@@ -51,6 +51,7 @@ document.getElementById("mangaForm").addEventListener("submit", async (event) =>
                 <h2>${manga.title.romaji} (${manga.title.english || "N/A"})</h2>
                 <img src="${manga.coverImage.large}" alt="Cover" width="200">
                 <p><strong>Descrizione:</strong> ${description}</p>
+                <p><strong>Autore:</strong> ${manga.staff?.nodes?.[0]?.name?.full || "Sconosciuto"}</p>
                 <p><strong>Punteggio:</strong> ${manga.averageScore}</p>
                 <p><strong>Capitoli:</strong> ${manga.chapters}</p>
                 <p><strong>Generi:</strong> ${genresList}</p> 
@@ -58,10 +59,10 @@ document.getElementById("mangaForm").addEventListener("submit", async (event) =>
                 <button name="preferiti">Aggiungi ai preferiti</button>
             </form>
 
-            <form action="Librerie.php" method="post">
+            <form action="./Librerie.php" method="post">
                 <input type="hidden" name="id_manga" value="${manga.id}">
                 <input type="hidden" name="titolo_manga" value="${manga.title.romaji}">
-                <input type="hidden" name="autore_manga" value="${manga.staff?.edges?.[0]?.node?.name?.full || 'Sconosciuto'}">
+                <input type="hidden" name="autore_manga" value="${manga.staff?.nodes?.[0]?.name?.full || ''}">
                 <input type="hidden" name="descrizione_manga" value="${description.replace(/(<([^>]+)>)/gi, "").replace(/"/g, "'")}">
                 <input type="hidden" name="volumi_manga" value="${manga.volumes || 1000}">
                 <input type="hidden" name="capitoli_manga" value="${manga.chapters || 10000}">

@@ -13,14 +13,14 @@
 
 
     if ($password != $password2) {
-        header("Location: registrati.php?msg=le password non coincidono");
+        header("Location: ../pagineVisualizzate/registrati.php?msg=le password non coincidono");
         exit;
     }
 
     if (!isset($username) || empty($username) || !isset($password) || empty($password) || !isset($password2) || empty($password2) ||
         !isset($nome) || empty($nome) || !isset($cognome) || empty($cognome))
     {
-        header("Location: registrati.php?msg=compilare tutti i campi");
+        header("Location: ../pagineVisualizzate/registrati.php?msg=compilare tutti i campi");
         exit;
     }
 
@@ -33,11 +33,11 @@
     $result = $stmt->get_result();
 
     if($conn->error){
-        header("Location: registrati.php?msg=errore nella registrazione");
+        header("Location: ../pagineVisualizzate/registrati.php?msg=errore nella registrazione");
         exit;
     }
 
-    header("Location: ../index.php?msg=registrazione effettuata");
+    header("Location: ../pagineVisualizzate/index.php?msg=registrazione effettuata");
     exit;
 
 ?>
