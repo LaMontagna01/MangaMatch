@@ -1,35 +1,56 @@
 <?php
+session_start();
+header("Content-Type: application/json");
 require_once("Conn.php");
 
-if (!isset($_SESSION)) {
-    session_start();
+$ret = [];
+
+// Validazione parametri POST
+if (!isset($_POST["username"]) || !isset($_POST["password"])) {
+    $ret["status"] = "ERR";
+    $ret["msg"] = "Username e password sono obbligatori.";
+    echo json_encode($ret);
+    die();
 }
 
-$username = $_GET["username"];
-$password = $_GET["password"];
-$passMD5 = md5($password);
+$username = $_POST["username"];
+$pasword = $_POST["password"];
+$password = md5($pasword);  // Usa md5() per l'hash della password
 
-if(!isset($username) || empty($username)|| !isset($password) || empty($password)){
-    header("Location: ../pagineVisualizzate/index.php?msg=compilare tutti i campi");
-    exit;
+$stmt = $conn->prepare("SELECT id_utente, username, password FROM utente WHERE username = ?");
+if (!$stmt) {
+    $ret["status"] = "ERR";
+    $ret["msg"] = "Errore nella preparazione della query.";
+    echo json_encode($ret);
+    die();
 }
 
-$q="SELECT * FROM utente where username=? AND password=?";
-$stmt = $conn->prepare($q);
-$stmt->bind_param("ss",$username,$passMD5);
+$stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if($result->num_rows==0){
-    header("Location: ../pagineVisualizzate/index.php?msg=username o password errati");
-    exit;
-}
-else if($result->num_rows==1){
+if ($result->num_rows === 1) {
     $row = $result->fetch_assoc();
-    $_SESSION["username"] = $row["username"];
-    $_SESSION["id_utente"] = $row["id_utente"];
-    //$_SESSION["ruolo"]=$row["admin"];
-    header("Location: ../pagineVisualizzate/ConsiglioAI.php?msg=Benvenuto ".$_SESSION["username"]);
-    exit;
+
+    // Confronta l'hash della password con quello memorizzato nel database
+    if ($password === $row["password"]) {
+        $_SESSION["username"] = $row["username"];
+        $_SESSION["id_utente"] = $row["id_utente"];
+
+        $ret["status"] = "OK";
+        $ret["msg"] = "Login effettuato con successo.";
+        echo json_encode($ret);
+        die();
+    } else {
+        $ret["status"] = "ERR";
+        $ret["msg"] = "Password non corretta.";
+        echo json_encode($ret);
+        die();
+    }
+} else {
+    $ret["status"] = "ERR";
+    $ret["msg"] = "Utente non trovato.";
+    echo json_encode($ret);
+    die();
 }
 ?>

@@ -1,24 +1,50 @@
 <?php
-    function IsMangaEsiste($conn, $id, $nome, $autore, $descrizione, $volumi, $capitoli, $rating, $immagine) {
-        $check = $conn->prepare("SELECT id FROM manga WHERE id = ?");
-        if (!$check) {
-            die("Errore SELECT: " . $conn->error);
-        }
-        $check->bind_param("i", $id);
-        $check->execute();
-        $check->store_result();
+require_once("../login/Conn.php");
+require_once("controlloMangaEsistente.php");
 
-        if ($check->num_rows == 0) {
-            $insert = $conn->prepare("INSERT INTO manga (id, nome, autore, descrizione, volumi, capitoli, rating, immagine) 
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            if (!$insert) {
-                die("Errore INSERT: " . $conn->error);
-            }
-            $insert->bind_param("isssiiis", $id, $nome, $autore, $descrizione, $volumi, $capitoli, $rating, $immagine);
-            $insert->execute();
-            $insert->close();
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+function aggiungiManga($conn, $dati) {
+    $id_manga = $dati["id_manga"] ?? null;
+    $titolo = $dati["titolo_manga"] ?? null;
+    $autore = $dati["autore_manga"] ?? null;
+    $descrizione = $dati["descrizione_manga"] ?? null;
+    $volumi = $dati["volumi_manga"] ?? null;
+    $capitoli = $dati["capitoli_manga"] ?? null;
+    $rating = $dati["rating_manga"] ?? null;
+    $immagine = $dati["immagine_manga"] ?? null;
+
+    if ($id_manga && $titolo && $autore && $descrizione && $volumi && $capitoli && $rating) {
+        // Verifica se il manga esiste già nel database
+        if (verificaMangaEsistente($id_manga)) {
+            return ["success" => "Manga già presente nel database."];
         }
 
-        $check->close();
+        // Aggiungi il manga alla libreria
+        $q = "INSERT INTO manga (id, nome, autore, descrizione, volumi, capitoli, rating, immagine) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($q);
+        $stmt->bind_param("isssiiis",  $id_manga, $titolo, $autore, $descrizione, $volumi, $capitoli, $rating, $immagine);
+
+        if ($stmt->execute()) {
+            return ["success" => "Manga aggiunto alla libreria!"];
+        } else {
+            return ["error" => "Errore nell'aggiunta alla libreria!"];
+        }
+    } else {
+        return ["error" => "Dati mancanti per aggiungere il manga!"];
     }
+}
+
+// Se il file è richiamato direttamente via POST (opzionale)
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (!isset($_SESSION["username"])) {
+        echo json_encode(["error" => "Effettua il login per aggiungere il manga alla libreria!"]);
+        exit;
+    }
+    $risposta = aggiungiManga($conn, $_POST);
+    echo json_encode($risposta);
+}
 ?>

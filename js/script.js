@@ -38,7 +38,7 @@ document.getElementById("mangaForm").addEventListener("submit", async (event) =>
         const description = await getMangaDescriptionViaJS(manga);
 
         resultDiv.innerHTML = `
-            <form action="../ConsiglioAI/gestoreAzioneConsiglioAi.php" method="post">
+            <form action="../creazioneLibrerie/aggiungiAiPreferiti.php" method="post">
                 <input type="hidden" name="id_manga" value="${manga.id}">
                 <input type="hidden" name="titolo_manga" value="${manga.title.romaji}">
                 <input type="hidden" name="autore_manga" value="${manga.staff?.nodes?.[0]?.name?.full || ''}">
@@ -56,7 +56,7 @@ document.getElementById("mangaForm").addEventListener("submit", async (event) =>
                 <p><strong>Capitoli:</strong> ${manga.chapters}</p>
                 <p><strong>Generi:</strong> ${genresList}</p> 
 
-                <button name="preferiti">Aggiungi ai preferiti</button>
+                <button type="submit">Aggiungi ai preferiti</button>
             </form>
 
             <form action="./Librerie.php" method="post">

@@ -1,4 +1,5 @@
 // AniListQueries.js
+
 import { fetchFromAniList } from "./GetApiAniList.js"; // Importa la funzione per fare la richiesta API
 
 // Funzione per ottenere i manga basati sulle preferenze
@@ -54,26 +55,48 @@ export async function getMangaByPreferences(genres = [], formats = [], statuses 
     return await fetchFromAniList(mangaQuery, variables);
 }
 
-// Funzione per ottenere i generi disponibili su AniList
-export async function getAllGenresFromAniList() {
-    const query = `
-        query {
-            GenreCollection
+// Funzione per chiamare PHP e ottenere i parametri di ricerca
+export function searchMangaFromPHP() {
+    const genres = ["action", "adventure"];
+    const formats = ["manga", "novel"];
+    const statuses = ["ongoing", "completed"];
+    const minScore = 60;
+    const maxChapters = 200;
+
+    // Fai una richiesta AJAX al PHP per ottenere i parametri
+    fetch('gestoreRicercaManga.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            genres: genres.join(","),
+            formats: formats.join(","),
+            statuses: statuses.join(","),
+            minScore: minScore,
+            maxChapters: maxChapters
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "OK") {
+            // Ora possiamo passare i parametri alla funzione di ricerca dei manga
+            getMangaByPreferences(data.genres, data.formats, data.statuses, data.minScore, data.maxChapters)
+                .then(mangaList => {
+                    if (mangaList.length > 0) {
+                        console.log("Manga trovato:", mangaList);
+                    } else {
+                        console.log("Nessun manga trovato.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Errore durante la ricerca dei manga:", error);
+                });
+        } else {
+            console.log("Errore nei parametri:", data.message);
         }
-    `;
-
-    try {
-        const data = await fetchFromAniList(query, {}); // Passiamo un oggetto vuoto perché questa query non ha variabili
-
-        // Verifica se ci sono generi restituiti
-        if (!data || !data.GenreCollection) {
-            throw new Error("Nessun genere trovato.");
-        }
-
-        return data.GenreCollection;
-    } catch (error) {
-        // Log dell'errore per il debug
-        console.error("Errore nella richiesta dei generi da AniList:", error);
-        return [];
-    }
+    })
+    .catch(error => {
+        console.error("Errore nella richiesta AJAX:", error);
+    });
 }

@@ -1,12 +1,7 @@
 <?php
-
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-
-    if (isset($_GET["msg"]))
-        echo "<h2>" . $_GET["msg"] . "</h2>";
-
+if (!isset($_SESSION)) {
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -14,8 +9,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricerca Manga</title>
-
-    <!-- Inclusione script.js -->
     <script type="module" src="../js/script.js"></script>
 </head>
 <body>
@@ -27,7 +20,6 @@
         <select id="genre" multiple>
             <!-- Dinamico: verranno aggiunti i generi tramite script.js -->
         </select>
-
         <br>
 
         <label>Formato:</label>
@@ -52,6 +44,7 @@
 
         <label>Punteggio minimo:</label>
         <input type="number" id="minScore" min="0" max="100" value="0" />
+        <br>
 
         <button type="submit">Cerca Manga</button>
     </form>

@@ -4,8 +4,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-if (isset($_GET["msg"]))
-    echo "<h1>" . $_GET["msg"] . "</h1>";
 
 ?>
 <!DOCTYPE html>
@@ -15,20 +13,32 @@ if (isset($_GET["msg"]))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>registrati</title>
 
+    <script src="../login/ScriptLogin.js"></script>
 
 </head>
 <body>
     <h1>Registrati</h1>
-    <form action="../login/gestoreRegistrati.php" method="get">
-        <label for="username">username: </label><input type="text" name="username" id="username">
 
-        <label for="nome">nome: </label><input type="text" name="nome" id="nome">
-        <label for="cognome">cognome: </label><input type="text" name="cognome" id="cognome">
-
-        <label for="password">password: </label><input type="text" name="password" id="password">
-        <label for="password2">conferma password: </label><input type="text" name="password2" id="password2">
-
-        <input type="submit" value="registrati">
+    <div id="error-message"></div>
+    
+    <form id="formRegistrazione" onsubmit="event.preventDefault(); registrati();">
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+        <br>
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" required>
+        <br>
+        <label for="cognome">Cognome:</label>
+        <input type="text" name="cognome" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+        <br>
+        <label for="password2">Conferma Password:</label>
+        <input type="password" name="password2" required>
+        <br>
+        <button type="submit">Registrati</button>
     </form>
+
 </body>
 </html>
