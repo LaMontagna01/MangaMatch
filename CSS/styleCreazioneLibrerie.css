@@ -4,12 +4,17 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #fbeaff, #e1f5fe);
-    background-image: url('../img/manga-shelf.jpg'); /* opzionale */
+    background: 
+        linear-gradient(to right, rgba(251, 234, 255, 0.7), rgba(225, 245, 254, 0.7)),
+        url('../img/god.png');
     background-size: cover;
     background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-blend-mode: lighten;
     color: #333;
 }
+
 
 h2 {
     text-align: center;

@@ -16,8 +16,10 @@
         }
     }
 
-        if (isset($_GET["msg"]))
-            echo "<h2>" . $_GET["msg"] . "</h2>";
+    if (isset($_GET["msg"]))
+        echo "<h2>" . $_GET["msg"] . "</h2>";
+
+    
 ?>
 <!DOCTYPE html>
 <html lang="it">
