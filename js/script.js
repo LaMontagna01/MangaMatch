@@ -1,5 +1,5 @@
 //script.js
-import { getMangaByPreferences, getAllGenresFromAniList } from "./AniListQueries.js"; // Import delle funzioni
+import { getMangaByPreferences, getAniListGenres } from "./AniListQueries.js"; // Import delle funzioni
 import { getMangaNarrationFromAI } from "./GetApiAi.js";
 
 // Funzione per ottenere la descrizione del manga tramite AI
@@ -78,31 +78,15 @@ document.getElementById("mangaForm").addEventListener("submit", async (event) =>
     }
 });
 
-
-// Popola dinamicamente il <select> con i generi da AniList
 window.addEventListener("DOMContentLoaded", async () => {
     const genreSelect = document.getElementById("genre");
+    const genres = await getAniListGenres();
 
-    try {
-        const genres = await getAllGenresFromAniList();
-        console.log("Generi ricevuti:", genres); 
-
-        if (genres && genres.length > 0) {
-            genres.forEach(genre => {
-                const option = document.createElement("option");
-                option.value = genre;
-                option.textContent = genre;
-                genreSelect.appendChild(option);
-            });
-        } else {
-            const option = document.createElement("option");
-            option.textContent = "Nessun genere disponibile";
-            genreSelect.appendChild(option);
-        }
-    } catch (error) {
-        console.error("Errore durante il caricamento dei generi:", error);
+    genres.forEach(genre => {
         const option = document.createElement("option");
-        option.textContent = "Errore nel caricamento dei generi";
+        option.value = genre;
+        option.textContent = genre;
         genreSelect.appendChild(option);
-    }
+    });
 });
+

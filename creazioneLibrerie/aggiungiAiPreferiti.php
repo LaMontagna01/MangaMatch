@@ -7,7 +7,7 @@ if (!isset($_SESSION)) {
 }
 
 if (!isset($_SESSION["username"])) {
-    echo json_encode(["error" => "Effettua il login per aggiungere ai preferiti!"]);
+    header("Location: ../pagineVisualizzate/ConsiglioAI.php?status=Effettua il login per aggiungere ai preferiti!");
     exit;
 }
 
@@ -24,15 +24,17 @@ $datiManga = [
     "immagine_manga" => $_POST["immagine_manga"] ?? null
 ];
 
+// Logica per gestire l'aggiunta ai preferiti
 if ($datiManga["id_manga"] && $id_utente) {
-    if (!verificaMangaEsistente($datiManga["id_manga"])) {
-        $risultato = aggiungiManga($conn, $datiManga);
-    
-        if (isset($risultato["error"])) {
-            echo json_encode($risultato); // Ferma se c’è un errore
-            exit;
-        }
+
+    $risultato = aggiungiManga($conn, $datiManga);
+
+    if (isset($risultato["error"])) {
+        // Redirect con messaggio di errore
+        header("Location: ../pagineVisualizzate/ConsiglioAI.php?status=error&message=" . urlencode("Errore nell'aggiunta del manga."));
+        exit;
     }
+    
     
     // Verifica se il manga è già nei preferiti
     $q = "SELECT * FROM preferiti WHERE id_utente = ? AND id_manga = ?";
@@ -42,19 +44,28 @@ if ($datiManga["id_manga"] && $id_utente) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo json_encode(["error" => "Questo manga è già nei tuoi preferiti."]);
+        // Redirect con messaggio di errore
+        header("Location: ../pagineVisualizzate/ConsiglioAI.php?status=error&message=" . urlencode("Questo manga è già nei tuoi preferiti."));
+        exit;
     } else {
         // Aggiungi il manga ai preferiti
         $q = "INSERT INTO preferiti (id_utente, id_manga) VALUES (?, ?)";
         $stmt = $conn->prepare($q);
         $stmt->bind_param("ii", $id_utente, $datiManga["id_manga"]);
         if ($stmt->execute()) {
-            echo json_encode(["success" => "Manga aggiunto ai preferiti!"]);
+            // Redirect con messaggio di successo
+            header("Location: ../pagineVisualizzate/ConsiglioAI.php?status=success&message=" . urlencode("Manga aggiunto ai preferiti!"));
+            exit;
         } else {
-            echo json_encode(["error" => "Errore nell'aggiunta ai preferiti!"]);
+            // Redirect con errore
+            header("Location: ../pagineVisualizzate/ConsiglioAI.php?status=error&message=" . urlencode("Errore nell'aggiunta ai preferiti!"));
+            exit;
         }
     }
 } else {
-    echo json_encode(["error" => "Dati mancanti!"]);
+    // Redirect con errore se i dati mancano
+    header("Location: ../pagineVisualizzate/ConsiglioAI.php?status=error&message=" . urlencode("Dati mancanti!"));
+    exit;
 }
+
 ?>

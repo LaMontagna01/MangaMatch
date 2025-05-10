@@ -1,0 +1,77 @@
+/* styleLibrerie.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #fbeaff, #e1f5fe);
+    background-image: url('../img/manga-shelf.jpg'); /* opzionale */
+    background-size: cover;
+    background-attachment: fixed;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #8e24aa;
+    margin-top: 30px;
+}
+
+form {
+    background-color: rgba(255, 255, 255, 0.95);
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #512da8;
+}
+
+select, input[type="text"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #ba68c8;
+    border-radius: 10px;
+    font-size: 1em;
+    outline: none;
+    box-sizing: border-box;
+}
+
+select[multiple] {
+    height: 100px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button[type="submit"],
+a button {
+    margin-top: 25px;
+    padding: 10px 20px;
+    background-color: #ab47bc;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover,
+a button:hover {
+    background-color: #9c27b0;
+}
+
+a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}

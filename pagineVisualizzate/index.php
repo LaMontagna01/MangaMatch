@@ -12,6 +12,7 @@ if (!isset($_SESSION)) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>login</title>
 
+        <link rel="stylesheet" href="../CSS/styleLogin.css">
         <script src="../login/ScriptLogin.js"></script>
 
     </head>

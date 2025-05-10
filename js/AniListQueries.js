@@ -55,6 +55,31 @@ export async function getMangaByPreferences(genres = [], formats = [], statuses 
     return await fetchFromAniList(mangaQuery, variables);
 }
 
+export async function getAniListGenres() {
+    const query = `
+        query {
+            GenreCollection
+        }
+    `;
+
+    try {
+        const response = await fetch("https://graphql.anilist.co", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ query }),
+        });
+
+        const data = await response.json();
+        return data.data.GenreCollection;
+    } catch (error) {
+        console.error("Errore nel recupero dei generi:", error);
+        return [];
+    }
+}
+
+
 // Funzione per chiamare PHP e ottenere i parametri di ricerca
 export function searchMangaFromPHP() {
     const genres = ["action", "adventure"];

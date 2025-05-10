@@ -19,7 +19,7 @@ function aggiungiManga($conn, $dati) {
     if ($id_manga && $titolo && $autore && $descrizione && $volumi && $capitoli && $rating) {
         // Verifica se il manga esiste già nel database
         if (verificaMangaEsistente($id_manga)) {
-            return ["success" => "Manga già presente nel database."];
+            return ["erroe" => "Manga già presente nel database."];
         }
 
         // Aggiungi il manga alla libreria
@@ -38,13 +38,4 @@ function aggiungiManga($conn, $dati) {
     }
 }
 
-// Se il file è richiamato direttamente via POST (opzionale)
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (!isset($_SESSION["username"])) {
-        echo json_encode(["error" => "Effettua il login per aggiungere il manga alla libreria!"]);
-        exit;
-    }
-    $risposta = aggiungiManga($conn, $_POST);
-    echo json_encode($risposta);
-}
 ?>

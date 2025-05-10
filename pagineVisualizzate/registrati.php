@@ -13,6 +13,7 @@ if (!isset($_SESSION)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>registrati</title>
 
+    <link rel="stylesheet" href="../CSS/styleRegistrati.css">
     <script src="../login/ScriptLogin.js"></script>
 
 </head>
@@ -39,6 +40,10 @@ if (!isset($_SESSION)) {
         <br>
         <button type="submit">Registrati</button>
     </form>
+    <br><br>
+    <a href="index.php">
+        <button class="back-button">Torna alla Login</button>
+    </a>
 
 </body>
 </html>
