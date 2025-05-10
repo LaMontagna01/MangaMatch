@@ -1,5 +1,5 @@
 // GetApiAniList.js
-export async function fetchFromAniList(query, variables) {
+async function fetchFromAniList(query, variables) {
     const url = "https://graphql.anilist.co";
 
     try {

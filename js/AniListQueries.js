@@ -1,9 +1,8 @@
 // AniListQueries.js
 
-import { fetchFromAniList } from "./GetApiAniList.js"; // Importa la funzione per fare la richiesta API
 
 // Funzione per ottenere i manga basati sulle preferenze
-export async function getMangaByPreferences(genres = [], formats = [], statuses = [], minScore = 0, maxChapters = 10000) {
+async function getMangaByPreferences(genres = [], formats = [], statuses = [], minScore = 0, maxChapters = 10000) {
     const mangaQuery = `
     query ($genres: [String], $formats: [MediaFormat], $statuses: [MediaStatus], $minScore: Int, $maxChapters: Int) {
         Page(page: 1, perPage: 10) {
@@ -55,7 +54,7 @@ export async function getMangaByPreferences(genres = [], formats = [], statuses 
     return await fetchFromAniList(mangaQuery, variables);
 }
 
-export async function getAniListGenres() {
+async function getAniListGenres() {
     const query = `
         query {
             GenreCollection
@@ -81,7 +80,7 @@ export async function getAniListGenres() {
 
 
 // Funzione per chiamare PHP e ottenere i parametri di ricerca
-export function searchMangaFromPHP() {
+function searchMangaFromPHP() {
     const genres = ["action", "adventure"];
     const formats = ["manga", "novel"];
     const statuses = ["ongoing", "completed"];

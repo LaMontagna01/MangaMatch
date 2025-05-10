@@ -27,7 +27,10 @@
         <title>Ricerca Manga</title>
 
         <link rel="stylesheet" href="../CSS/styleConsiglio.css">
-        <script type="module" src="../js/script.js"></script>
+        <script src="../js/AniListQueries.js"></script>
+        <script src="../js/GetApiAi.js"></script>
+        <script src="../js/GetApiAniList.js"></script>
+        <script src="../js/script.js"></script>
 
     </head>
     <body>
@@ -72,5 +75,10 @@
         <div id="result">
             <!-- I risultati saranno popolati tramite JavaScript -->
         </div>
+
+        <br><br>
+        <a href="index.php">
+            <button class="back-button">Torna alla Login</button>
+        </a>
     </body>
 </html>

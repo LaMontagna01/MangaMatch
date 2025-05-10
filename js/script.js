@@ -1,6 +1,4 @@
 //script.js
-import { getMangaByPreferences, getAniListGenres } from "./AniListQueries.js"; // Import delle funzioni
-import { getMangaNarrationFromAI } from "./GetApiAi.js";
 
 // Funzione per ottenere la descrizione del manga tramite AI
 async function getMangaDescriptionViaJS(manga) {

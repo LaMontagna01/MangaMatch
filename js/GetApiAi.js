@@ -1,7 +1,7 @@
 //GetApiAI.js
 const COHERE_API_KEY = "Yrvta4HoPJr3tzDtBEJQChO7iCS632leoNgLiREH"; // Crea un account e prendi la tua key
 
-export async function getMangaNarrationFromAI(manga) {
+async function getMangaNarrationFromAI(manga) {
     const prompt = `Parlami del manga "${manga.title}", con una valutazione di ${manga.score}. Descrivimi l'opera in modo appassionante e dettagliato, come se stessi consigliandola a un lettore senza annoiarlo con ripetizioni e mostrando solo parole chiavi.`;
 
     try {
