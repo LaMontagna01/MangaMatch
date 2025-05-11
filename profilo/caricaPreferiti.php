@@ -32,7 +32,7 @@ $stmt->close();
 
 // Output HTML per i preferiti
 foreach ($preferiti as $manga) {
-    echo "<a href='../profilo/manga.php?id=" . $manga['id_manga'] . "'>";
+    echo "<a href='../pagineVisualizzate/manga.php?id=" . $manga['id_manga'] . "'>";
     echo "<img src='" . $manga['immagine'] . "' alt='Manga' style='width: 100px;'>";
     echo "</a>";
 }

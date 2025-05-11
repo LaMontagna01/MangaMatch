@@ -47,11 +47,11 @@ if (!isset($_SESSION["id_utente"])) {
         echo "<h4>$nome_libreria</h4>";
         foreach ($manga_list as $manga) {
             echo "<div class='manga-item'>";
-            echo "<a href='../paginaManga/manga.php?id=" . $manga['id_manga'] . "'>";
+            echo "<a href='../pagineVisualizzate/manga.php?id=" . $manga['id_manga'] . "'>";
             echo "<img src='" . $manga['immagine'] . "' alt='Manga' style='width: 100px;'>";
             echo "</a><br>";
-            echo "<small>Capitoli: " . $manga['capitoli'] . "</small><br>";
-            echo "<small>Stato: " . $manga['stati'] . "</small>";
+            echo "Capitoli: " . $manga['capitoli'] . "<br>";
+            echo "Stato: " . $manga['stati'] . "";
             echo "</div>";
         }
         echo "</div>";

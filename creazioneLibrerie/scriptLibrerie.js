@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("action").addEventListener("change", showFormOptions);
-    document.getElementById("tipologia").addEventListener("change", showFormOptions);
-    document.getElementById("libreria").addEventListener("change", showFormOptions);
+    if (document.getElementById("action") && document.getElementById("tipologia") && document.getElementById("libreria")) {
+        document.getElementById("action").addEventListener("change", showFormOptions);
+        document.getElementById("tipologia").addEventListener("change", showFormOptions);
+        document.getElementById("libreria").addEventListener("change", showFormOptions);
+    }
 });
 
 // Gestisce la visualizzazione dinamica dei campi in base alla scelta dell'utente
@@ -34,7 +36,7 @@ function showFormOptions() {
     selezionaLibreriaForm.disabled = true;
 
     idLibreriaSelect.required = false;
-    idLibreriaSelect.disabled = true; // ✅ disabilita il campo nascosto
+    idLibreriaSelect.disabled = true; 
 
     if (selectType === "Collezione") {
         volumiSelect.style.display = 'block';
@@ -56,7 +58,7 @@ else if (action === "seleziona") {
     selezionaLibreriaForm.disabled = false;
 
     idLibreriaSelect.required = true;
-    idLibreriaSelect.disabled = false; // ✅ riabilita il campo solo se serve
+    idLibreriaSelect.disabled = false; 
 
     const selectedOption = libreriaSelect.options[libreriaSelect.selectedIndex];
     const selectTypeLibreria = selectedOption.getAttribute("data-tipologia");
@@ -75,11 +77,27 @@ else if (action === "seleziona") {
 }
 
 
-// Aggiunge un manga ai preferiti senza AJAX (submit tradizionale)
+//aggiunge un manga ai preferiti 
 function aggiungiAiPreferiti(mangaId) {
     const form = document.createElement("form");
     form.method = "POST";
     form.action = "../creazioneLibrerie/aggiungiAiPreferiti.php";
+
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "id_manga";
+    input.value = mangaId;
+    form.appendChild(input);
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+//rggiunge un manga ai preferiti 
+function rimuoviDaiPreferiti(mangaId) {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "../creazioneLibrerie/rimuoviDaiPreferiti.php";
 
     const input = document.createElement("input");
     input.type = "hidden";

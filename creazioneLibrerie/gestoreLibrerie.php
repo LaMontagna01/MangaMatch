@@ -135,7 +135,7 @@ if ($datiManga["id_manga"] && $id_utente) {
                     $capitolo = $_POST['capitolo'] ?? '';
                     $stato = $_POST['stato'] ?? '';
                     if ($capitolo && $stato) {
-                        $q_stato = "INSERT INTO stato_lettura (id_libreria_manga, capitolo, stato) VALUES (?, ?, ?)";
+                        $q_stato = "INSERT INTO stato_lettura (id_libreria_manga, numero_capitolo, stato) VALUES (?, ?, ?)";
                         $stmt_stato = $conn->prepare($q_stato);
                         $stmt_stato->bind_param("iis", $id_libreria_manga, $capitolo, $stato);
                         $stmt_stato->execute();
